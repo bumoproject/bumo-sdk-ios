@@ -13,6 +13,7 @@
 @interface TransactionHistory : NSObject
 @property (nonatomic, copy) NSString *actualFee;
 @property (nonatomic, assign) int64_t closeTime;
+@property (nonatomic, strong) NSArray *contractTxHashes;
 @property (nonatomic, assign) int32_t errorCode;
 @property (nonatomic, copy) NSString *errorDesc;
 @property (nonatomic, copy) NSString *transactionHash;

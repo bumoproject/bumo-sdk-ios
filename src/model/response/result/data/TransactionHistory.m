@@ -14,6 +14,7 @@
     // value should be Class or Class name.
     return @{@"actualFee" : @"actual_fee",
              @"closeTime" : @"close_time",
+             @"contractTxHashes" : @"contract_tx_hashes",
              @"errorCode" : @"error_code",
              @"errorDesc" : @"error_desc",
              @"transactionHash" : @"hash",
@@ -22,7 +23,8 @@
 }
 + (NSDictionary *)modelContainerPropertyGenericClass {
     // value should be Class or Class name.
-    return @{@"signatures" : [SignatureInfo class],
+    return @{@"contractTxHashes" : [NSString class],
+             @"signatures" : [SignatureInfo class],
              @"transaction" : TransactionInfo.class};
 }
 @end
