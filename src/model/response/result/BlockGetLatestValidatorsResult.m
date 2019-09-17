@@ -12,6 +12,6 @@
 @implementation BlockGetLatestValidatorsResult
 + (NSDictionary *)modelContainerPropertyGenericClass {
     // value should be Class or Class name.
-    return @{@"validators" : [ValidatorInfo class]};
+    return @{@"validators" : [NSString class]};
 }
 @end
