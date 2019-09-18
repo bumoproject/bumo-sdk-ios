@@ -9,6 +9,7 @@
 #import "BlockServiceImpl.h"
 #import "BlockCheckStatusLedgerSeqResponse.h"
 #import "BlockRewardJsonResponse.h"
+#import "ContractServiceImpl.h"
 #import "Tools.h"
 #import "General.h"
 #import "Constant.h"
@@ -320,27 +321,50 @@
         if (blockNumber < 1) {
             @throw [[SDKException alloc] initWithCode : INVALID_BLOCKNUMBER_ERROR];
         }
-        NSString *getInfoUrl = [[General sharedInstance] blockGetRewardUrl : blockNumber];
-        NSData *result = [Http get: getInfoUrl];
-        BlockRewardJsonResponse *blockRewardJsonResponse = [BlockRewardJsonResponse yy_modelWithJSON: result];
-        int32_t errorCode = blockRewardJsonResponse.errorCode;
-        if (errorCode == 4) {
-            @throw [[SDKException alloc] initWithCodeAndDesc : errorCode : [NSString stringWithFormat : @"Block (%lld) doest not exist", blockNumber]];
+        
+        NSString *sourceAddress = @"";
+        NSString *contractAddress = @"buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
+        NSString *code = @"";
+        int64_t feeLimit = 10000000000;
+        int32_t optType = 2;
+        int64_t gasPrice = 10000;
+        NSString *input = @"{\"method\": \"getRewardDistribute\"}";
+        int64_t contractBalance = 100000000000;
+        ContractCallResponse *contractCallResponse = [ContractCallResponse new];
+        contractCallResponse = [ContractServiceImpl callContract:sourceAddress :contractAddress :optType : code : input : contractBalance : gasPrice : feeLimit];
+        if ([contractCallResponse errorCode] != 0) {
+            @throw [[SDKException alloc] initWithCodeAndDesc : [contractCallResponse errorCode] : [contractCallResponse errorDesc]];
         }
-        if (errorCode != 0) {
-            NSString *errorDesc = blockRewardJsonResponse.errorDesc;
-            @throw [[SDKException alloc] initWithCodeAndDesc : errorCode : ([Tools isEmpty : errorDesc] ? @"error" : errorDesc)];
+        
+        NSDictionary *rewardsResult = [[[contractCallResponse result] queryRets]  objectAtIndex: 0];
+        NSDictionary *queryResult = [rewardsResult objectForKey: @"result"];
+        NSString *value = [queryResult objectForKey: @"value"];
+        NSData *valueData = [value dataUsingEncoding: NSUTF8StringEncoding];
+        NSError *error = nil;
+        NSDictionary *valueDic = [NSJSONSerialization JSONObjectWithData: valueData options:NSJSONReadingMutableContainers error:&error];
+        if (error != nil) {
+            @throw [[SDKException alloc] initWithCode: SYSTEM_ERROR];
         }
-        NSDictionary *validatorsReward = blockRewardJsonResponse.result.validatorsReward;
-        NSMutableArray<ValidatorRewardInfo *> *rewardResults = [[NSMutableArray alloc] init];
-        for (NSString *validator in validatorsReward) {
-            ValidatorRewardInfo *validatorRewardInfo = [ValidatorRewardInfo new];
-            validatorRewardInfo.validator = validator;
-            validatorRewardInfo.reward = [[validatorsReward objectForKey: validator] longLongValue];
-            [rewardResults addObject: validatorRewardInfo];
+        NSDictionary *rewards = [valueDic objectForKey: @"rewards"];
+        
+        NSDictionary *validators = [rewards objectForKey: @"validators"];
+        blockGetRewardResult.validators = [NSMutableArray new];
+        for (NSString *validator in validators) {
+            Rewards *reward = [Rewards new];
+            [reward setAddress: validator];
+            [reward setReward: [validators objectForKey: validator]];
+            [blockGetRewardResult.validators addObject : reward];
         }
-        blockGetRewardResult.rewardResults = [rewardResults copy];
-        blockGetRewardResult.blockReward = blockRewardJsonResponse.result.blockReward;
+        
+        NSDictionary *kols = [rewards objectForKey: @"kols"];
+        blockGetRewardResult.kols = [NSMutableArray new];
+        for (NSString *kol in kols) {
+            Rewards *reward = [Rewards new];
+            [reward setAddress: kol];
+            [reward setReward: [kols objectForKey: kol]];
+            [blockGetRewardResult.kols addObject : reward];
+        }
+        
         [blockGetRewardResponse buildResponse: (SUCCESS) :(blockGetRewardResult)];
     }
     @catch(SDKException *sdkException) {
@@ -372,24 +396,50 @@
         if ([Tools isEmpty : [[General sharedInstance] getUrl]]) {
             @throw [[SDKException alloc] initWithCode : URL_EMPTY_ERROR];
         }
-        NSString *getInfoUrl = [[General sharedInstance] blockGetLatestRewardUrl];
-        NSData *result = [Http get: getInfoUrl];
-        BlockRewardJsonResponse *blockRewardJsonResponse = [BlockRewardJsonResponse yy_modelWithJSON: result];
-        int32_t errorCode = blockRewardJsonResponse.errorCode;
-        if (errorCode != 0) {
-            NSString *errorDesc = blockRewardJsonResponse.errorDesc;
-            @throw [[SDKException alloc] initWithCodeAndDesc : errorCode : ([Tools isEmpty : errorDesc] ? @"error" : errorDesc)];
+        
+        NSString *sourceAddress = @"";
+        NSString *contractAddress = @"buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
+        NSString *code = @"";
+        int64_t feeLimit = 10000000000;
+        int32_t optType = 2;
+        int64_t gasPrice = 10000;
+        NSString *input = @"{\"method\": \"getRewardDistribute\"}";
+        int64_t contractBalance = 100000000000;
+        ContractCallResponse *contractCallResponse = [ContractCallResponse new];
+        contractCallResponse = [ContractServiceImpl callContract:sourceAddress :contractAddress :optType : code : input : contractBalance : gasPrice : feeLimit];
+        if ([contractCallResponse errorCode] != 0) {
+            @throw [[SDKException alloc] initWithCodeAndDesc : [contractCallResponse errorCode] : [contractCallResponse errorDesc]];
         }
-        NSDictionary *validatorsReward = blockRewardJsonResponse.result.validatorsReward;
-        NSMutableArray<ValidatorRewardInfo *> *rewardResults = [[NSMutableArray alloc] init];
-        for (NSString *validator in validatorsReward) {
-            ValidatorRewardInfo *validatorRewardInfo = [ValidatorRewardInfo new];
-            validatorRewardInfo.validator = validator;
-            validatorRewardInfo.reward = [[validatorsReward objectForKey: validator] longLongValue];
-            [rewardResults addObject: validatorRewardInfo];
+        
+        NSDictionary *rewardsResult = [[[contractCallResponse result] queryRets]  objectAtIndex: 0];
+        NSDictionary *queryResult = [rewardsResult objectForKey: @"result"];
+        NSString *value = [queryResult objectForKey: @"value"];
+        NSData *valueData = [value dataUsingEncoding: NSUTF8StringEncoding];
+        NSError *error = nil;
+        NSDictionary *valueDic = [NSJSONSerialization JSONObjectWithData: valueData options:NSJSONReadingMutableContainers error:&error];
+        if (error != nil) {
+            @throw [[SDKException alloc] initWithCode: SYSTEM_ERROR];
         }
-        blockGetLatestRewardResult.rewardResults = [rewardResults copy];
-        blockGetLatestRewardResult.blockReward = blockRewardJsonResponse.result.blockReward;
+        NSDictionary *rewards = [valueDic objectForKey: @"rewards"];
+        
+        NSDictionary *validators = [rewards objectForKey: @"validators"];
+        blockGetLatestRewardResult.validators = [NSMutableArray new];
+        for (NSString *validator in validators) {
+            Rewards *reward = [Rewards new];
+            [reward setAddress: validator];
+            [reward setReward: [validators objectForKey: validator]];
+            [blockGetLatestRewardResult.validators addObject : reward];
+        }
+        
+        NSDictionary *kols = [rewards objectForKey: @"kols"];
+        blockGetLatestRewardResult.kols = [NSMutableArray new];
+        for (NSString *kol in kols) {
+            Rewards *reward = [Rewards new];
+            [reward setAddress: kol];
+            [reward setReward: [kols objectForKey: kol]];
+            [blockGetLatestRewardResult.kols addObject : reward];
+        }
+        
         [blockGetLatestRewardResponse buildResponse: (SUCCESS) :(blockGetLatestRewardResult)];
     }
     @catch(SDKException *sdkException) {

@@ -10,13 +10,10 @@
 #import "YYModelClass.h"
 
 @implementation BlockGetRewardResult
-+ (NSDictionary *)modelCustomPropertyMapper {
-    // value should be Class or Class name.
-    return @{@"blockReward" : @"block_reward",
-             @"rewardResults" : @"validators_reward"};
-}
+
 + (NSDictionary *)modelContainerPropertyGenericClass {
     // value should be Class or Class name.
-    return @{@"rewardResults" : [ValidatorRewardInfo class]};
+    return @{@"validators" : [Rewards class],
+             @"kols": [Rewards class]};
 }
 @end

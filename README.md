@@ -25,4 +25,4 @@ Step 4: Add "#import <sdk_ios/sdk_ios.h>" in your project.
 ## Example project
 Bumo IOS SDK provides rich examples for developers' reference
 
-[Sample document entry](docs/SDK_CN.md "")
+[Sample document entry](docs/SDK.md "")

@@ -416,6 +416,8 @@
 		584D12192178989600D58D74 /* Keypair.m in Sources */ = {isa = PBXBuildFile; fileRef = 584D12172178989600D58D74 /* Keypair.m */; };
 		58832C812179BA7500F69BC3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58832C7F2179BA7300F69BC3 /* libcrypto.a */; };
 		58832C822179BA7500F69BC3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58832C802179BA7400F69BC3 /* libssl.a */; };
+		588455A92332014A006A6F80 /* Rewards.m in Sources */ = {isa = PBXBuildFile; fileRef = 588455A82332014A006A6F80 /* Rewards.m */; };
+		588455AB23320178006A6F80 /* Rewards.h in Headers */ = {isa = PBXBuildFile; fileRef = 588455AA23320178006A6F80 /* Rewards.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5899801E211B12AB00E4C9C2 /* ed25519-donna-impl-base.h in Headers */ = {isa = PBXBuildFile; fileRef = 58998003211B12A900E4C9C2 /* ed25519-donna-impl-base.h */; };
 		5899801F211B12AB00E4C9C2 /* ed25519-donna-64bit-x86-32bit.h in Headers */ = {isa = PBXBuildFile; fileRef = 58998004211B12A900E4C9C2 /* ed25519-donna-64bit-x86-32bit.h */; };
 		58998020211B12AB00E4C9C2 /* ed25519-donna.h in Headers */ = {isa = PBXBuildFile; fileRef = 58998005211B12A900E4C9C2 /* ed25519-donna.h */; };
@@ -1080,6 +1082,8 @@
 		584D12172178989600D58D74 /* Keypair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keypair.m; sourceTree = "<group>"; };
 		58832C7F2179BA7300F69BC3 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		58832C802179BA7400F69BC3 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		588455A82332014A006A6F80 /* Rewards.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Rewards.m; sourceTree = "<group>"; };
+		588455AA23320178006A6F80 /* Rewards.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rewards.h; sourceTree = "<group>"; };
 		58998003211B12A900E4C9C2 /* ed25519-donna-impl-base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ed25519-donna-impl-base.h"; sourceTree = "<group>"; };
 		58998004211B12A900E4C9C2 /* ed25519-donna-64bit-x86-32bit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ed25519-donna-64bit-x86-32bit.h"; sourceTree = "<group>"; };
 		58998005211B12A900E4C9C2 /* ed25519-donna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ed25519-donna.h"; sourceTree = "<group>"; };
@@ -2145,6 +2149,8 @@
 				58D662212182AC500098D687 /* KeyStoreEty.m */,
 				58CBD60B21882B0000A4C97D /* TransactionItem.h */,
 				58CBD60C21882B0000A4C97D /* TransactionItem.m */,
+				588455AA23320178006A6F80 /* Rewards.h */,
+				588455A82332014A006A6F80 /* Rewards.m */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -2516,6 +2522,7 @@
 				589981E6211B189500E4C9C2 /* AccountGetMetadataResponse.h in Headers */,
 				589981F6211B189500E4C9C2 /* AccountGetInfoResponse.h in Headers */,
 				589981E5211B189500E4C9C2 /* AccountCheckValidResponse.h in Headers */,
+				588455AB23320178006A6F80 /* Rewards.h in Headers */,
 				589981F2211B189500E4C9C2 /* AccountGetAssetsResponse.h in Headers */,
 				584D119521773D1300D58D74 /* safestack.h in Headers */,
 				58CBD60D21882B0000A4C97D /* TransactionItem.h in Headers */,
@@ -2766,6 +2773,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 58FED0222117EF6F00702DDB;
 			productRefGroup = 58FED02D2117EF6F00702DDB /* Products */;
@@ -2962,6 +2970,7 @@
 				584AAA06212482D7009F6199 /* BlockGetRewardResponse.m in Sources */,
 				589983CE211D57A100E4C9C2 /* Empty.pbobjc.m in Sources */,
 				584D11F5217869D400D58D74 /* b64.c in Sources */,
+				588455A92332014A006A6F80 /* Rewards.m in Sources */,
 				584AA991212456DC009F6199 /* TransactionGetInfoRequest.m in Sources */,
 				589981AD211B188300E4C9C2 /* TransactionBuildBlobResult.m in Sources */,
 				58998143211B182A00E4C9C2 /* SDKError.m in Sources */,

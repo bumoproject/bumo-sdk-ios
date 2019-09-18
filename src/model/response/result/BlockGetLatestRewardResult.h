@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ValidatorRewardInfo.h"
+#import "Rewards.h"
 
 @interface BlockGetLatestRewardResult : NSObject
-@property (nonatomic, assign) int64_t blockReward;
-@property (nonatomic, strong) NSArray *rewardResults;
+@property (nonatomic, strong) NSMutableArray *validators;
+@property (nonatomic, strong) NSMutableArray *kols;
 @end
